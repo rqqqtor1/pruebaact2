@@ -5,8 +5,8 @@ import java.sql.SQLException
 
 object DatabaseHelper {
     private const val URL = "jdbc:oracle:thin:@//[HOST]:[PORT]/[SERVICE_NAME]"
-    private const val USER = "your_username"
-    private const val PASSWORD = "your_password"
+    private const val USER = "usuario"
+    private const val PASSWORD = "contraseña"
 
     init {
         try {
