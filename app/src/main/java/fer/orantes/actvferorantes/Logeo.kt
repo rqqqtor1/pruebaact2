@@ -5,8 +5,11 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import modelo.DatabaseHelper
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import modelo.ClaseConexion
 import java.sql.Connection
 import java.sql.PreparedStatement
 import java.sql.ResultSet
@@ -14,39 +17,20 @@ import java.sql.ResultSet
 class Logeo : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         setContentView(R.layout.activity_logeo)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
 
-       val etCorreo : EditText = findViewById(R.id.etEmail)
-        val etPassword: EditText = findViewById(R.id.etPassword)
-        val btnLogin: Button = findViewById(R.id.btnLogin)
 
-        btnLogin.setOnClickListener {
-            val email = etCorreo.text.toString()
-            val password = etPassword.text.toString()
 
-            loginUser(email, password)
+
         }
+
     }
 
-    private fun loginUser(email: String, password: String) {
-        val connection: Connection? = DatabaseHelper.getConnection()
-        if (connection != null) {
-            val sql = "SELECT * FROM users WHERE email = ? AND password = ?"
-            val statement: PreparedStatement = connection.prepareStatement(sql)
-            statement.setString(1, email)
-            statement.setString(2, password)
 
-            val resultSet: ResultSet = statement.executeQuery()
-            if (resultSet.next()) {
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-            } else {
-                Toast.makeText(this, "Invalid credentials", Toast.LENGTH_SHORT).show()
-            }
 
-            resultSet.close()
-            statement.close()
-            connection.close()
-        }
-    }
 }
