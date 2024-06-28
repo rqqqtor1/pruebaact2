@@ -13,6 +13,14 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import modelo.ClaseConexion
+import android.text.InputType
+import android.widget.ImageView
+import java.util.UUID
+import android.widget.TextView
+
+
+
+
 
 class Registro : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,38 +32,61 @@ class Registro : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
         val txtCorreoReg = findViewById<EditText>(R.id.txtEmailreg)
         val txtPasswordReg = findViewById<EditText>(R.id.txtPasswordreg)
+        val txtConfirmarPassword = findViewById<EditText>(R.id.txtConfirmarPasswordreg)
         val txtUser = findViewById<EditText>(R.id.etUsernamereg)
         val btnRegister = findViewById<Button>(R.id.btnRegister)
+        val btnRegresarLogin = findViewById<Button>(R.id.btnRegresarLogin)
+        val imgVerPassword = findViewById<ImageView>(R.id.imgVerPassword)
+        val imgVerConfirmacionPassword = findViewById<ImageView>(R.id.imgVerConfirmacionPassword)
+
 
         btnRegister.setOnClickListener {
-GlobalScope.launch(Dispatchers.IO){
-val objConexion = ClaseConexion().cadenaConexion()
-
-    val crearUser =
-        objConexion?.prepareStatement("INSERT INTO users (username, email, passwordsita) values (?, ?, ?)")!!
-
-crearUser.setString(1, txtCorreoReg.text.toString())
-    crearUser.setString(2, txtPasswordReg.text.toString())
-    crearUser.setString(3, txtUser.text.toString())
-crearUser.executeQuery()
-    withContext(Dispatchers.Main) {
-Toast.makeText( this@Registro, "Usuario creado", Toast.LENGTH_SHORT).show()
-        txtCorreoReg.setText("")
-        txtPasswordReg.setText("")
-        txtUser.setText("")
-    }
-
-
-}
+            if (txtPasswordReg.text.toString() == txtConfirmarPassword.text.toString()) {
+                GlobalScope.launch(Dispatchers.IO) {
+                    val objConexion = ClaseConexion().cadenaConexion()
+                    val crearUser = objConexion?.prepareStatement(
+                        "INSERT INTO users (username, email, password) VALUES (?, ?, ?)"
+                    )!!
+                    crearUser.setString(1, txtUser.text.toString())
+                    crearUser.setString(2, txtCorreoReg.text.toString())
+                    crearUser.setString(3, txtPasswordReg.text.toString())
+                    crearUser.executeUpdate()
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(this@Registro, "Usuario creado", Toast.LENGTH_SHORT).show()
+                        txtCorreoReg.setText("")
+                        txtPasswordReg.setText("")
+                        txtConfirmarPassword.setText("")
+                        txtUser.setText("")
+                    }
+                }
+            } else {
+                Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show()
+            }
         }
 
 
+        imgVerPassword.setOnClickListener {
+            if (txtPasswordReg.inputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD) {
+                txtPasswordReg.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+            } else {
+                txtPasswordReg.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            }
+        }
+
+        imgVerConfirmacionPassword.setOnClickListener {
+            if (txtConfirmarPassword.inputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD) {
+                txtConfirmarPassword.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+            } else {
+                txtConfirmarPassword.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            }
+        }
 
 
-
-
-
+        btnRegresarLogin.setOnClickListener {
+            finish()
+        }
     }
 }
