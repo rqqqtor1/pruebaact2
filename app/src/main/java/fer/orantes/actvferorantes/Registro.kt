@@ -17,6 +17,8 @@ import android.text.InputType
 import android.widget.ImageView
 import java.util.UUID
 import android.widget.TextView
+import android.content.Intent
+
 
 
 
@@ -38,8 +40,7 @@ class Registro : AppCompatActivity() {
         val txtConfirmarPassword = findViewById<EditText>(R.id.txtConfirmarPasswordreg)
         val txtUser = findViewById<EditText>(R.id.etUsernamereg)
         val btnRegister = findViewById<Button>(R.id.btnRegister)
-        val btnRegresarLogin = findViewById<Button>(R.id.btnRegresarLogin)
-        val imgVerPassword = findViewById<ImageView>(R.id.imgVerPassword)
+                val imgVerPassword = findViewById<ImageView>(R.id.imgVerPassword)
         val imgVerConfirmacionPassword = findViewById<ImageView>(R.id.imgVerConfirmacionPassword)
 
 
@@ -85,7 +86,10 @@ class Registro : AppCompatActivity() {
         }
 
 
+        val btnRegresarLogin = findViewById<Button>(R.id.btnRegresarLogin)
         btnRegresarLogin.setOnClickListener {
+            val intent = Intent(this, Logeo::class.java)
+            startActivity(intent)
             finish()
         }
     }
