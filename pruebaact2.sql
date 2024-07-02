@@ -24,3 +24,5 @@ INSERT INTO users (username, email, passwordsita) values ('theloko', 'roandhq@gm
 
 drop table users 
 drop table tickets
+
+select * from users

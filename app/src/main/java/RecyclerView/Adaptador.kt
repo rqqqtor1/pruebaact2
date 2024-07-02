@@ -6,19 +6,17 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import fer.orantes.actvferorantes.R
 import modelo.tbTickets
+import android.widget.EditText
+import android.widget.ImageView
+
+
+
 
 class Adaptador(private val tickets: List<tbTickets>) : RecyclerView.Adapter<Adaptador.TicketViewHolder>() {
 
-
     class TicketViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val numTicket: TextView = view.findViewById(R.id.tvNumTicket)
-        val titulo: TextView = view.findViewById(R.id.tvTitulo)
-        val descripcion: TextView = view.findViewById(R.id.tvDescripcion)
-        val autor: TextView = view.findViewById(R.id.tvAutor)
-        val emailAutor: TextView = view.findViewById(R.id.tvEmailAutor)
-        val fechaCreacion: TextView = view.findViewById(R.id.tvFechaCreacion)
-        val fechaCierre: TextView = view.findViewById(R.id.tvFechaCierre)
-        val estado: TextView = view.findViewById(R.id.tvEstado)
+        val titulo: TextView = view.findViewById(R.id.txtTituloCard)
+        val estado: EditText = view.findViewById(R.id.txtEstado)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TicketViewHolder {
@@ -28,14 +26,8 @@ class Adaptador(private val tickets: List<tbTickets>) : RecyclerView.Adapter<Ada
 
     override fun onBindViewHolder(holder: TicketViewHolder, position: Int) {
         val ticket = tickets[position]
-        holder.numTicket.text = ticket.numTicket.toString()
-        holder.titulo.text = ticket.titulo
-        holder.descripcion.text = ticket.descripcion
-        holder.autor.text = ticket.autor
-        holder.emailAutor.text = ticket.emailAutor
-        holder.fechaCreacion.text = ticket.fechaCreacion
-        holder.fechaCierre.text = ticket.fechaCierre
-        holder.estado.text = ticket.estado
+        holder.titulo.text = ticket.title
+        holder.estado.setText(ticket.status)
     }
 
     override fun getItemCount() = tickets.size

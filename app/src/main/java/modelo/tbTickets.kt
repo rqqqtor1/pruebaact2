@@ -1,12 +1,12 @@
 package modelo
 
 data class tbTickets(
-    val numTicket: Int,
-    val titulo: String,
+    val ticketNumber: Int,
+    val title: String,
     val descripcion: String,
-    val autor: String,
-    val emailAutor: String,
-    val fechaCreacion: String,
-    val fechaCierre: String,
-    val estado: String
+    val author: String,
+    val email: String,
+    val creationDate: String,
+    val completionDate: String?,
+    val status: String
 )
