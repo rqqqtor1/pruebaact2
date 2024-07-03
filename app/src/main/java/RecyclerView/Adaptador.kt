@@ -2,6 +2,7 @@ package RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import fer.orantes.actvferorantes.R
@@ -10,13 +11,16 @@ import android.widget.EditText
 import android.widget.ImageView
 
 
-
-
-class Adaptador(private val tickets: List<tbTickets>) : RecyclerView.Adapter<Adaptador.TicketViewHolder>() {
+class Adaptador(
+    private val tickets: List<tbTickets>,
+    private val onEliminarTicket: (tbTickets) -> Unit,
+    private val onEditarTicket: (tbTickets) -> Unit
+) : RecyclerView.Adapter<Adaptador.TicketViewHolder>() {
 
     class TicketViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val titulo: TextView = view.findViewById(R.id.txtTituloCard)
-        val estado: EditText = view.findViewById(R.id.txtEstado)
+        val btnEliminar: Button = view.findViewById(R.id.btnUpdateCard)
+        val btnEditar: Button = view.findViewById(R.id.btnElimCard)
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TicketViewHolder {
@@ -26,8 +30,9 @@ class Adaptador(private val tickets: List<tbTickets>) : RecyclerView.Adapter<Ada
 
     override fun onBindViewHolder(holder: TicketViewHolder, position: Int) {
         val ticket = tickets[position]
-        holder.titulo.text = ticket.title
-        holder.estado.setText(ticket.status)
+        holder.btnEliminar.setOnClickListener { onEliminarTicket(ticket) }
+        holder.btnEditar.setOnClickListener { onEditarTicket(ticket) }
+
     }
 
     override fun getItemCount() = tickets.size
