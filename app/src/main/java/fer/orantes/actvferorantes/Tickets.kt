@@ -171,7 +171,6 @@ class Tickets : AppCompatActivity() {
             val conexion = ClaseConexion().cadenaConexion()
             if (conexion != null) {
                 try {
-                    // Generar un número de ticket único
                     val statement = conexion.createStatement()
                     val resultSet: ResultSet = statement.executeQuery("SELECT MAX(ticket_number) AS max_ticket_number FROM tickets")
                     var maxTicketNumber = 0
@@ -202,7 +201,6 @@ class Tickets : AppCompatActivity() {
                             adaptador.notifyDataSetChanged()
                         }
                     }
-
                     preparedStatement.close()
                     conexion.close()
                 } catch (e: SQLException) {
@@ -245,7 +243,6 @@ class Tickets : AppCompatActivity() {
                             }
                         }
                     }
-
                     preparedStatement.close()
                     conexion.close()
                 } catch (e: SQLException) {
@@ -266,9 +263,7 @@ class Tickets : AppCompatActivity() {
             val conexion = ClaseConexion().cadenaConexion()
             if (conexion != null) {
                 try {
-                    val preparedStatement: PreparedStatement = conexion.prepareStatement(
-                        "DELETE FROM tickets WHERE ticket_number = ?"
-                    )
+                    val preparedStatement = conexion.prepareStatement("DELETE FROM tickets WHERE ticket_number = ?")
                     preparedStatement.setInt(1, ticket.ticketNumber)
 
                     val rowsDeleted = preparedStatement.executeUpdate()
@@ -279,7 +274,6 @@ class Tickets : AppCompatActivity() {
                             adaptador.notifyDataSetChanged()
                         }
                     }
-
                     preparedStatement.close()
                     conexion.close()
                 } catch (e: SQLException) {

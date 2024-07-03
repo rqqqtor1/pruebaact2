@@ -11,6 +11,7 @@ import android.widget.EditText
 import android.widget.ImageView
 
 
+
 class Adaptador(
     private val tickets: List<tbTickets>,
     private val onEliminarTicket: (tbTickets) -> Unit,
@@ -18,9 +19,10 @@ class Adaptador(
 ) : RecyclerView.Adapter<Adaptador.TicketViewHolder>() {
 
     class TicketViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val btnEliminar: Button = view.findViewById(R.id.btnUpdateCard)
-        val btnEditar: Button = view.findViewById(R.id.btnElimCard)
-
+        val txtTituloCard: TextView = itemView.findViewById(R.id.txtTituloCard)
+        val txtEstado: TextView = itemView.findViewById(R.id.txtEstado)
+        val btnEliminar: ImageView = view.findViewById(R.id.btnElimCard)
+        val btnEditar: ImageView = view.findViewById(R.id.btnUpdateCard)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TicketViewHolder {
@@ -30,9 +32,10 @@ class Adaptador(
 
     override fun onBindViewHolder(holder: TicketViewHolder, position: Int) {
         val ticket = tickets[position]
+        holder.txtTituloCard.text = ticket.title
+        holder.txtEstado.text = ticket.status
         holder.btnEliminar.setOnClickListener { onEliminarTicket(ticket) }
         holder.btnEditar.setOnClickListener { onEditarTicket(ticket) }
-
     }
 
     override fun getItemCount() = tickets.size
